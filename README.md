@@ -18,7 +18,7 @@ $ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/in
 
 ```bash
 // prepare data
-$ history > history.txt
+$ history -i | awk '{print $2,$3,$4,$5,$1}'  > input.txt
 
 $ bb report.clj
 ```

@@ -1,20 +1,33 @@
 #!/usr/bin/env bb
 
 (require '[clojure.string :as string])
-(def contents (slurp "history.txt"))
+(def contents (slurp "input.txt"))
 
-(defn- parse-line [line]
-  (let [rest (subs line 7)]
+(defn- ignore-timestamp [line]
+  (subs line 17))
+(defn parse-timestamp [line]
+  (subs line 0 10))
+
+(defn- parse-commands [line]
+  (let [rest (ignore-timestamp line)]
     (first (string/split rest #"\s+"))))
 
-(def commands (string/split-lines contents))
+(defn- get-directory [line]
+  (second (string/split line #"\s+")))
 
+(->> contents
+     (string/split-lines)
+     (def commands))
+
+;; total number of commands
 (->> commands
      (count)
      (def total))
+(println (format "Total: %d" total))
+(println)
 
 (->> commands
-     (map parse-line)
+     (map parse-commands)
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by second)
@@ -22,16 +35,14 @@
      (take 10)
      (def top-commands))
 
+(println "🏆Top 10 commands")
+(doseq [[value count] top-commands]
+  (println (format "%6d %s" count value)))
+(println)
+
 ;; top 10 directories
-
-(defn- ignore-number [line]
-  (subs line 7))
-
-(defn- get-directory [line]
-  (second (string/split line #"\s+")))
-
 (->> commands
-     (map ignore-number)
+     (map ignore-timestamp)
      (filter #(string/starts-with? % "cd"))
      (map get-directory)
      (filter #(not (string/blank? %)))
@@ -43,18 +54,22 @@
      (take 10)
      (def top-directories))
 
-;; print total
-(println (format "Total: %d" total))
-(println)
-
-;; ;; print top 10 commands
-(println "🏆Top 10 commands")
-(doseq [[value count] top-commands]
-  (println (format "%6d %s" count value)))
-(println)
-
-;; print top 10 directories
 (println "📂Top 10 directories")
 (doseq [[value, count] top-directories]
   (println (format "%6d %s" count value)))
+(println)
+
+;; the busiest day
+(->> commands
+     (map parse-timestamp)
+     (group-by identity)
+     (map (fn [[k v]] [k (count v)]))
+     (sort-by second)
+     (reverse)
+     (take 1)
+     (def busiest-day))
+
+(println "💦The busiest day")
+(doseq [[value, count] busiest-day]
+  (println (format "%6d commands on %s" count value)))
 (println)

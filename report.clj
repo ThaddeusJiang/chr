@@ -8,6 +8,9 @@
 (defn parse-timestamp [line]
   (subs line 0 10))
 
+(defn parse-hour [line]
+  (subs line 11 13))
+
 (defn- parse-commands [line]
   (let [rest (ignore-timestamp line)]
     (first (string/split rest #"\s+"))))
@@ -72,4 +75,17 @@
 (println "💦The busiest day")
 (doseq [[value, count] busiest-day]
   (println (format "%6d commands on %s" count value)))
+(println)
+
+;; Daily Activity
+(->> commands
+     (map parse-hour)
+     (group-by identity)
+     (map (fn [[k v]] [k (count v)]))
+     (sort-by first)
+     (def hourly-usage))
+
+(println "🕙Daily Activity")
+(doseq [[value, count] hourly-usage]
+  (println (format "%5s:00 %s" value (string/join (repeat (/ count 100) "█")))))
 (println)

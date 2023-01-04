@@ -2,34 +2,14 @@
 
 (require '[clojure.string :as string])
 
-(def weekday-english ["Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday"])
-;; (defn parse-date [date-string]
-;;   (get weekday-english
-;;        (.getDay (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd hh:mm") date-string))))
-
-(defn parse-date [date-string]
-  (.getDay (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd hh:mm") date-string)))
-
-;; (defn get-weekday [inst]
-;;   (.getDisplayName (.getCalendar inst) java.util.Calendar/DAY_OF_WEEK java.util.Locale/ENGLISH))
-;; (println (get-weekday (parse-date "2023-01-04 10:28")))
-;=> "Wednesday"
-
+;; read input file
 (def contents (slurp "input.txt"))
 
-(defn- ignore-timestamp [line]
+(defn- ignore-timestamp-str [line]
   (subs line 17))
-(defn parse-timestamp [line]
-  (subs line 0 10))
-
-(defn parse-hour [line]
-  (subs line 11 13))
-
-(defn- pickup-datetime-str [line]
-  (subs line 0 17))
 
 (defn- parse-commands [line]
-  (let [rest (ignore-timestamp line)]
+  (let [rest (ignore-timestamp-str line)]
     (first (string/split rest #"\s+"))))
 
 (defn- get-directory [line]
@@ -62,7 +42,7 @@
 
 ;; top 10 directories
 (->> commands
-     (map ignore-timestamp)
+     (map ignore-timestamp-str)
      (filter #(string/starts-with? % "cd"))
      (map get-directory)
      (filter #(not (string/blank? %)))
@@ -79,9 +59,12 @@
   (println (format "%6d %s" count value)))
 (println)
 
+(defn pickup-date-str [line]
+  (subs line 0 10))
+
 ;; the busiest day
 (->> commands
-     (map parse-timestamp)
+     (map pickup-date-str)
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by second)
@@ -94,6 +77,16 @@
   (println (format "%6d commands on %s" count value)))
 (println)
 
+(def weekday-english ["Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday"])
+(defn translate-weekday [index]
+  (get weekday-english index))
+
+(defn- pickup-datetime-str [line]
+  (subs line 0 17))
+
+(defn parse-date [date-string]
+  (.getDay (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd hh:mm") date-string)))
+
 ;; Weekly Activity
 (->> commands
      (map pickup-datetime-str)
@@ -101,16 +94,19 @@
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by first)
+     (map (fn [[k v]] [(translate-weekday k) v]))
      (def weekly-usage))
 
 (println "📅Weekly Activity")
 (doseq [[value, count] weekly-usage]
-  (println (format "%8s %s" value (string/join (repeat (/ count 100) "█")))))
+  (println (format "%10s %s" value (string/join (repeat (/ count 100) "█")))))
 (println)
 
+(defn pickup-hour [line]
+  (subs line 11 13))
 ;; Daily Activity
 (->> commands
-     (map parse-hour)
+     (map pickup-hour)
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by first)
@@ -118,5 +114,5 @@
 
 (println "🕙Daily Activity")
 (doseq [[value, count] hourly-usage]
-  (println (format "%5s:00 %s" value (string/join (repeat (/ count 100) "█")))))
+  (println (format "%6s:00 %s" value (string/join (repeat (/ count 100) "█")))))
 (println)

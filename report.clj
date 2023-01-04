@@ -1,6 +1,20 @@
 #!/usr/bin/env bb
 
 (require '[clojure.string :as string])
+
+(def weekday-english ["Sunday" "Monday" "Tuesday" "Wednesday" "Thursday" "Friday" "Saturday"])
+;; (defn parse-date [date-string]
+;;   (get weekday-english
+;;        (.getDay (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd hh:mm") date-string))))
+
+(defn parse-date [date-string]
+  (.getDay (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd hh:mm") date-string)))
+
+;; (defn get-weekday [inst]
+;;   (.getDisplayName (.getCalendar inst) java.util.Calendar/DAY_OF_WEEK java.util.Locale/ENGLISH))
+;; (println (get-weekday (parse-date "2023-01-04 10:28")))
+;=> "Wednesday"
+
 (def contents (slurp "input.txt"))
 
 (defn- ignore-timestamp [line]
@@ -10,6 +24,9 @@
 
 (defn parse-hour [line]
   (subs line 11 13))
+
+(defn- pickup-datetime-str [line]
+  (subs line 0 17))
 
 (defn- parse-commands [line]
   (let [rest (ignore-timestamp line)]
@@ -75,6 +92,20 @@
 (println "💦The busiest day")
 (doseq [[value, count] busiest-day]
   (println (format "%6d commands on %s" count value)))
+(println)
+
+;; Weekly Activity
+(->> commands
+     (map pickup-datetime-str)
+     (map parse-date)
+     (group-by identity)
+     (map (fn [[k v]] [k (count v)]))
+     (sort-by first)
+     (def weekly-usage))
+
+(println "📅Weekly Activity")
+(doseq [[value, count] weekly-usage]
+  (println (format "%8s %s" value (string/join (repeat (/ count 100) "█")))))
 (println)
 
 ;; Daily Activity

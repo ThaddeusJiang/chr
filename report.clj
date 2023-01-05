@@ -14,8 +14,10 @@
      (def commands))
 
 (defn parse-date [date-string]
-  (java.util.Date. (parse-long (format "%s000" date-string))))
-
+  (->> date-string
+       (format "%s000")
+       (parse-long)
+       (java.util.Date.)))
 
 (defn- ignore-timestamp-str [line]
   (subs line 15))
@@ -98,8 +100,6 @@
 (->> commands
      (map pickup-datetime-str)
      (map weekday)
-    ;;  (map parse-date)
-    ;;  (map (fn [date] (format "%tA" date)))
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by first)

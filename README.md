@@ -24,50 +24,47 @@ $ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/in
 ## Usage
 
 ```bash
-// prepare data
-$ history -i | awk '{print $2,$3,$4,$5,$1}'  > input.txt
-
 $ bb report.clj
 ```
 
 result:
 
 ```
-Total: 10125
+Total: 10017
 
 🏆Top 10 commands
-  3167 git
-  1661 yarn
-  1595 cd
-   663 ls
-   568 code
-   214 docker
-   178 exit
-   152 mv
-   139 rm
-   136 docker-compose
+  3065 git
+  1597 yarn
+  1530 cd
+   647 ls
+   550 code
+   219 docker
+   176 exit
+   153 mv
+   140 rm
+   137 clear
 
 📂Top 10 directories
-    54 git/work/kyuyo/kyuyo-docs
-    52 git/work/kyuyo/kyuyo-codes
-    46 git/work/romu/romu-styleguide/apps/romu-frontend-core
+    55 git/work/kyuyo/kyuyo-docs
+    54 git/work/kyuyo/kyuyo-codes
+    39 git/work/romu/romu-styleguide/apps/romu-frontend-core
     34 git/personal
-    32 git/personal/codes/omakase-ui
-    29 git/work/romu/romu-frontend-root
+    31 git/personal/codes/omakase-ui
     27 git/personal/codes
-    25 git/work/romu/romu-docs
-    21 packages/react-table
-    20 codes
+    22 git/work/romu/romu-docs
+    22 git/work/romu/romu-frontend-root
+    19 kyuyo-codes
+    19 codes
 
 💦The busiest day
    402 commands on 2022-12-19
 
 📅Weekly Activity
     Sunday ████
-    Monday ████████████████████████
-   Tuesday █████████████████
+    Monday ███████████████████████
+   Tuesday ████████████████
  Wednesday ████████████████████
-  Thursday ████████████████
+  Thursday █████████████████
     Friday █████████████
   Saturday ███
 
@@ -78,7 +75,7 @@ Total: 10125
     07:00
     08:00
     09:00 ██
-    10:00 ███████████
+    10:00 ██████████
     11:00 ███████
     12:00 ██
     13:00 ███████
@@ -91,7 +88,7 @@ Total: 10125
     20:00 ██
     21:00 ███████
     22:00 ███████
-    23:00 ██
+    23:00 ███
 ```
 
 ## Author

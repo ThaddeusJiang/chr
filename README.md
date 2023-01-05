@@ -13,6 +13,14 @@ So, I want to make a same report for myself.
 
 ![Fig 2022 Wrapped](https://pbs.twimg.com/media/FkqSV8hXoAEXqON?format=png&name=small)
 
+## Features
+
+- 🏆Top Commands
+- 📂Top Directories
+- 💦Busiest Day
+- 📅Weekly Activity
+- 🕙Daily Activity
+
 ## Required
 
 installed [babashka](https://github.com/babashka/babashka)
@@ -24,7 +32,12 @@ $ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/in
 ## Usage
 
 ```bash
+$ git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
 $ bb report.clj
+
+// or
+
+$ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/report.clj"))'
 ```
 
 result:
@@ -98,6 +111,12 @@ Total: 10017
 - Website: https://thaddeusjiang.com/
 - Twitter: [@ThaddeusJiang](https://twitter.com/ThaddeusJiang)
 - Github: [@ThaddeusJiang](https://github.com/ThaddeusJiang)
+
+## Thanks and Acknowledgements
+
+This has been possible due to the previous work of numerous people. In particular:
+
+- @borkdude - Author of babashka, thanks for helping me remove the manual data preparation requirement
 
 ## Show your support
 

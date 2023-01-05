@@ -1,23 +1,33 @@
 #!/usr/bin/env bb
 
-(require '[clojure.string :as string])
+(ns report
+  (:require [clojure.string :as string]))
 
-;; read input file
-(def contents (slurp "input.txt"))
+(def home-dir (System/getenv "HOME"))
+(def shell-prefix (last (string/split (System/getenv "SHELL") #"/")))
+
+(def contents (slurp (format "%s/.%s_history" home-dir shell-prefix)))
+
+(->> contents
+     (string/split-lines)
+     (filter #(string/starts-with? % ":"))
+     (def commands))
+
+(defn parse-date [date-string]
+  (->> date-string
+       (format "%s000")
+       (parse-long)
+       (java.util.Date.)))
 
 (defn- ignore-timestamp-str [line]
-  (subs line 17))
+  (subs line 15))
 
 (defn- parse-commands [line]
-  (let [rest (ignore-timestamp-str line)]
+  (let [rest (second (string/split line #";"))]
     (first (string/split rest #"\s+"))))
 
 (defn- get-directory [line]
   (second (string/split line #"\s+")))
-
-(->> contents
-     (string/split-lines)
-     (def commands))
 
 ;; total number of commands
 (->> commands
@@ -59,12 +69,14 @@
   (println (format "%6d %s" count value)))
 (println)
 
-(defn pickup-date-str [line]
-  (subs line 0 10))
+(defn- pickup-datetime-str [line]
+  (subs line 2 12))
 
 ;; the busiest day
 (->> commands
-     (map pickup-date-str)
+     (map pickup-datetime-str)
+     (map parse-date)
+     (map (fn [date] (format "%tF" date)))
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by second)
@@ -81,16 +93,13 @@
 (defn translate-weekday [index]
   (get weekday-english index))
 
-(defn- pickup-datetime-str [line]
-  (subs line 0 17))
-
-(defn parse-date [date-string]
-  (.getDay (.parse (java.text.SimpleDateFormat. "yyyy-MM-dd hh:mm") date-string)))
+(defn weekday [date-string]
+  (.getDay (parse-date date-string)))
 
 ;; Weekly Activity
 (->> commands
      (map pickup-datetime-str)
-     (map parse-date)
+     (map weekday)
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by first)
@@ -102,11 +111,11 @@
   (println (format "%10s %s" value (string/join (repeat (/ count 100) "█")))))
 (println)
 
-(defn pickup-hour [line]
-  (subs line 11 13))
 ;; Daily Activity
 (->> commands
-     (map pickup-hour)
+     (map pickup-datetime-str)
+     (map parse-date)
+     (map (fn [date] (format "%tH" date)))
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by first)

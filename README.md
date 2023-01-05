@@ -1,4 +1,11 @@
-# CLI Report
+# CHR
+
+[![bb built-in](https://raw.githubusercontent.com/babashka/babashka/master/logo/built-in-badge.svg)](https://babashka.org)
+[![Twitter: ThaddeusJiang](https://img.shields.io/twitter/follow/ThaddeusJiang.svg?style=social)](https://twitter.com/ThaddeusJiang)
+
+The native commands history report for the default terminal users.
+
+The name "CHR" is derived from `commands history report`.
 
 I like Fig report, but I don't use Fig currently.😅
 
@@ -86,3 +93,19 @@ Total: 10125
     22:00 ███████
     23:00 ██
 ```
+
+## Author
+
+👤 **Thaddeus Jiang**
+
+- Website: https://thaddeusjiang.com/
+- Twitter: [@ThaddeusJiang](https://twitter.com/ThaddeusJiang)
+- Github: [@ThaddeusJiang](https://github.com/ThaddeusJiang)
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+---
+
+_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

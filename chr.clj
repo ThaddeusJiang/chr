@@ -1,6 +1,6 @@
 #!/usr/bin/env bb
 
-(ns report
+(ns chr
   (:require [clojure.string :as string]))
 
 (def home-dir (System/getenv "HOME"))

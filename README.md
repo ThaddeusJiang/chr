@@ -1,15 +1,14 @@
 # CHR
 
+The native commands history report for the default terminal users.
+
 [![bb compatible](https://raw.githubusercontent.com/babashka/babashka/master/logo/badge.svg)](https://babashka.org)
 [![Twitter: ThaddeusJiang](https://img.shields.io/twitter/follow/ThaddeusJiang.svg?style=social)](https://twitter.com/ThaddeusJiang)
 
-The native commands history report for the default terminal users.
+> The name "CHR" is derived from `commands history report`.
 
-The name "CHR" is derived from `commands history report`.
-
-I like Fig report, but I don't use Fig currently.😅
-
-So, I want to make a same report for myself.
+> I like Fig report, but I don't use Fig currently.😅
+> So, I want to make a same report for myself.
 
 ![Fig 2022 Wrapped](https://pbs.twimg.com/media/FkqSV8hXoAEXqON?format=png&name=small)
 
@@ -21,23 +20,27 @@ So, I want to make a same report for myself.
 - 📅Weekly Activity
 - 🕙Daily Activity
 
-## Required
+## Usage
 
-installed [babashka](https://github.com/babashka/babashka)
+```bash
+$ bbin install https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj
+
+$ chr
+```
+
+If you don't use [bbin](https://github.com/babashka/bbin), you have to install [babashka](https://github.com/babashka/babashka) first.
 
 ```bash
 $ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
 ```
 
-## Usage
-
 ```bash
 $ git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
-$ bb report.clj
+$ bb chr.clj
 
 // or
 
-$ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/report.clj"))'
+$ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj"))'
 ```
 
 result:

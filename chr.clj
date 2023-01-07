@@ -23,8 +23,12 @@
   (subs line 15))
 
 (defn- parse-commands [line]
-  (let [rest (second (string/split line #";"))]
-    (first (string/split rest #"\s+"))))
+  (some-> line
+    not-empty
+    (string/split #";")
+    second
+    (string/split #"\s+")
+    first))
 
 (defn- get-directory [line]
   (second (string/split line #"\s+")))
@@ -37,7 +41,7 @@
 (println)
 
 (->> commands
-     (map parse-commands)
+     (keep parse-commands)
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by second)

@@ -22,25 +22,34 @@ The native commands history report for the default terminal users.
 
 ## Usage
 
+### bbin install
+
 ```bash
 $ bbin install https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj
 
 $ chr
 ```
 
-If you don't use [bbin](https://github.com/babashka/bbin), you have to install [babashka](https://github.com/babashka/babashka) first.
+### install without bbin
+
+<details>
+
+<summary>
+babashka is required.
+</summary>
 
 ```bash
 $ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
 ```
 
+</details>
+
 ```bash
-$ git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
-$ bb chr.clj
+$ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj"))'
 
 // or
-
-$ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj"))'
+$ git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
+$ bb chr.clj
 ```
 
 result:

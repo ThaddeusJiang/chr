@@ -1,5 +1,6 @@
 {:paths ["src"]
-;;  :bbin/bin {chr {:main-opts ["chr.clj"]}}
+ :deps {thaddeusjiang/chr {:local/root "."}}
+ :bbin/bin {chr {:main-opts ["chr"]}}
  :tasks
  {test:bb {:extra-paths ["test"]
            :extra-deps {io.github.cognitect-labs/test-runner

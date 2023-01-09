@@ -1,5 +1,5 @@
-(ns chr.chr-test
-  (:require [chr.chr :as chr]
+(ns thaddeusjiang.chr-test
+  (:require [thaddeusjiang.chr :as chr]
             [clojure.test :refer [deftest is testing]]))
 
 (deftest parse-date-test

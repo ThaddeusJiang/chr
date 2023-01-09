@@ -32,17 +32,11 @@ $ chr
 
 ### install without bbin
 
-<details>
-
-<summary>
-babashka is required.
-</summary>
+> babashka is required.
 
 ```bash
 $ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
 ```
-
-</details>
 
 ```bash
 $ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj"))'

@@ -24,11 +24,11 @@
 
 (defn- parse-commands [line]
   (some-> line
-    not-empty
-    (string/split #";")
-    second
-    (string/split #"\s+")
-    first))
+          not-empty
+          (string/split #";")
+          second
+          (string/split #"\s+")
+          first))
 
 (defn- get-directory [line]
   (second (string/split line #"\s+")))
@@ -54,13 +54,23 @@
   (println (format "%6d %s" count value)))
 (println)
 
+(defn match-cd-command? [line]
+  (string/starts-with? line "cd"))
+
+(defn match-code-command? [line]
+  (string/starts-with? line "code"))
+
+(defn availd-directory? [directory]
+  (and (not (string/blank? directory))
+       (not (string/starts-with? directory ".."))
+       (not (string/starts-with? directory "."))))
+
 ;; top 10 directories
 (->> commands
      (map ignore-timestamp-str)
-     (filter #(string/starts-with? % "cd"))
+     (filter (or match-cd-command? match-code-command?))
      (map get-directory)
-     (filter #(not (string/blank? %)))
-     (filter #(not (string/starts-with? % "..")))
+     (filter availd-directory?)
      (group-by identity)
      (map (fn [[k v]] [k (count v)]))
      (sort-by second)

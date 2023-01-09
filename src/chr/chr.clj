@@ -1,6 +1,6 @@
 #!/usr/bin/env bb
 
-(ns chr
+(ns chr.chr
   (:require [clojure.string :as string]))
 
 (def home-dir (System/getenv "HOME"))
@@ -24,11 +24,11 @@
 
 (defn- parse-commands [line]
   (some-> line
-    not-empty
-    (string/split #";")
-    second
-    (string/split #"\s+")
-    first))
+          not-empty
+          (string/split #";")
+          second
+          (string/split #"\s+")
+          first))
 
 (defn- get-directory [line]
   (second (string/split line #"\s+")))

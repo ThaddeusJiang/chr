@@ -1,6 +1,8 @@
--module(chr).
+#!/usr/bin/env escript
+%% -*- erlang -*-
 
--export([main/0]).
+main(_) ->
+    run().
 
 %% @spec get_histories() -> [string()]
 get_histories() ->
@@ -114,7 +116,7 @@ daynum_to_weekday(DayNum) ->
     end.
 
 print_progress(Title, N) ->
-    io:format(" ~s: ", [Title]),
+    io:format("~s: ", [Title]),
     lists:foreach(
         fun(_) -> io:format("▓") end,
         lists:seq(1, N)
@@ -159,7 +161,7 @@ print_counts(Title, List) ->
     ),
     io:format("~n").
 
-main() ->
+run() ->
     Histories = get_histories(),
     top_commands(Histories),
     top_directories(Histories),

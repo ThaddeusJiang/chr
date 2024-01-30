@@ -9,7 +9,9 @@ get_histories() ->
     case file:read_file("/Users/tj/.zsh_history") of
         {ok, Bin} ->
             Str = binary_to_list(Bin),
-            Lines = string:tokens(Str, "\n"),
+            Lines = lists:filter(
+                fun(Line) -> string:prefix(Line, ":") =/= nomatch end, string:tokens(Str, "\n")
+            ),
             Lines;
         {error, Reason} ->
             io:format("Error: ~s~n", [Reason]),
@@ -19,7 +21,7 @@ get_histories() ->
 % Total count command histories
 total(List) -> io:format("👍Total commands           ~-6B~n~n", [length(List)]).
 
-% 🏆Top 10 commands
+% 🏆Top Commands
 pick_command(Line) ->
     case string:tokens(Line, " ") of
         [_ | [Str | _]] ->
@@ -80,28 +82,28 @@ top_commands(List) ->
     Sorted = lists:sort(fun({_, V1}, {_, V2}) -> V1 > V2 end, maps:to_list(CountsMap)),
     Top10 = lists:sublist(Sorted, 10),
 
-    print_counts("🏆Top 10 commands", Top10).
+    print_counts("🏆Top Commands", Top10).
 
-% 📂Top 10 directories
+% 📂Top Directories
 top_directories(List) ->
     Directories = [pick_directory(Line) || Line <- List, string:find(Line, "cd ") =/= nomatch],
 
     CountsMap = counts_map(Directories),
     Sorted = lists:sort(fun({_, V1}, {_, V2}) -> V1 > V2 end, maps:to_list(CountsMap)),
     Top10 = lists:sublist(Sorted, 10),
-    print_counts("📂Top 10 directories", Top10).
+    print_counts("📂Top Directories", Top10).
 
 date_to_string({Year, Month, Day}) ->
     io_lib:format("~4..0B-~2..0B-~2..0B", [Year, Month, Day]).
 
-% 💦The busiest day
+% 💦Busiest Day
 top_busiest_day(List) ->
     Dates = [pick_date(Line) || Line <- List],
     CountsMap = counts_map(Dates),
     Sorted = lists:sort(fun({_, V1}, {_, V2}) -> V1 > V2 end, maps:to_list(CountsMap)),
     [{Date, Count}] = lists:sublist(Sorted, 1),
 
-    print_counts("💦The busiest day", [{date_to_string(Date), Count}]).
+    print_counts("💦Busiest Day", [{date_to_string(Date), Count}]).
 
 daynum_to_weekday(DayNum) ->
     case DayNum of

@@ -1,11 +1,10 @@
-# CHR
+# chr
 
-The native commands history report for the default terminal users.
+The commands history report command for the default terminal users.
 
-[![bb compatible](https://raw.githubusercontent.com/babashka/babashka/master/logo/badge.svg)](https://babashka.org)
+> The name "chr" is derived from `commands history report`.
+
 [![Twitter: ThaddeusJiang](https://img.shields.io/twitter/follow/ThaddeusJiang.svg?style=social)](https://twitter.com/ThaddeusJiang)
-
-> The name "CHR" is derived from `commands history report`.
 
 > I like Fig report, but I don't use Fig currently.😅
 > So, I want to make a same report for myself.
@@ -20,94 +19,75 @@ The native commands history report for the default terminal users.
 - 📅Weekly Activity
 - 🕙Daily Activity
 
+## Requirements
+
+- [Erlang](https://www.erlang.org/) (>= 24.0)
+
+```shell
+brew install erlang
+```
+
 ## Usage
 
-### bbin install
-
-```bash
-$ bbin install https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj
-
-$ chr
+```shell
+git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
+./chr
 ```
 
-### install without bbin
-
-> babashka is required.
-
-```bash
-$ bash < <(curl -s https://raw.githubusercontent.com/babashka/babashka/master/install)
-```
-
-```bash
-$ bb -e '(load-string (slurp "https://raw.githubusercontent.com/ThaddeusJiang/chr/main/chr.clj"))'
-
-// or
-$ git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
-$ bb chr.clj
-```
-
-result:
+## Report Example
 
 ```
-Total: 10017
+🏆Top Commands
 
-🏆Top 10 commands
-  3065 git
-  1597 yarn
-  1530 cd
-   647 ls
-   550 code
-   219 docker
-   176 exit
-   153 mv
-   140 rm
-   137 clear
+git                     204
+code                     31
+clear                    10
+ls                        9
+./chr                     7
+escript                   6
+cat                       6
+docker                    5
+tiddlywiki                3
+npx                       3
 
-📂Top 10 directories
-    55 git/work/kyuyo/kyuyo-docs
-    54 git/work/kyuyo/kyuyo-codes
-    39 git/work/romu/romu-styleguide/apps/romu-frontend-core
-    34 git/personal
-    31 git/personal/codes/omakase-ui
-    27 git/personal/codes
-    22 git/work/romu/romu-docs
-    22 git/work/romu/romu-frontend-root
-    19 kyuyo-codes
-    19 codes
+📂Top Directories
 
-💦The busiest day
-   402 commands on 2022-12-19
+git/work/plugo            7
+src/proto                 4
+git/ThaddeusJiang/ch      4
+../..                     4
+git/ThaddeusJiang         3
+git                       2
+te-work-                  1
+repos/roaming-gatewa      1
+repos/proto               1
+private-notes             1
+
+💦Busiest Day
+
+2024-01-29              206
 
 📅Weekly Activity
-    Sunday ████
-    Monday ███████████████████████
-   Tuesday ████████████████
- Wednesday ████████████████████
-  Thursday █████████████████
-    Friday █████████████
-  Saturday ███
+
+Monday: ▓▓▓▓▓▓▓▓▓▓
+Tuesday: ▓▓▓▓▓
+Friday: ▓▓
 
 🕙Daily Activity
-    00:00
-    04:00
-    05:00
-    07:00
-    08:00
-    09:00 ██
-    10:00 ██████████
-    11:00 ███████
-    12:00 ██
-    13:00 ███████
-    14:00 ██████████
-    15:00 ████████
-    16:00 ████████
-    17:00 ████████
-    18:00 ████████
-    19:00 ███
-    20:00 ██
-    21:00 ███████
-    22:00 ███████
-    23:00 ███
+
+10: ▓▓▓▓▓▓▓▓▓▓
+11: ▓▓
+12: ▓
+13: ▓
+14: ▓▓▓
+15: ▓▓
+16:
+17:
+18: ▓
+19: ▓▓▓
+20: ▓▓▓▓
+
+👍Total commands           364
 ```
 
 ## Author
@@ -118,7 +98,7 @@ Total: 10017
 - Twitter: [@ThaddeusJiang](https://twitter.com/ThaddeusJiang)
 - Github: [@ThaddeusJiang](https://github.com/ThaddeusJiang)
 
-## Thanks and Acknowledgements
+## Acknowledgement
 
 This has been possible due to the previous work of numerous people. In particular:
 

@@ -6,7 +6,14 @@ main(_) ->
 
 %% @spec get_histories() -> [string()]
 get_histories() ->
-    case file:read_file("/Users/tj/.zsh_history") of
+    Shell = string:trim(os:cmd("echo $SHELL")),
+    HistoryFile =
+        case Shell of
+            "/bin/bash" -> os:getenv("HOME") ++ "/.bash_history";
+            "/bin/zsh" -> os:getenv("HOME") ++ "/.zsh_history";
+            _ -> "Unknown shell or history file"
+        end,
+    case file:read_file(HistoryFile) of
         {ok, Bin} ->
             Str = binary_to_list(Bin),
             Lines = lists:filter(
@@ -76,6 +83,7 @@ counts_map(List) ->
         fun(X, Acc) -> maps:update_with(X, fun(V) -> V + 1 end, 1, Acc) end, #{}, List
     ).
 
+% 🏆Top Commands
 top_commands(List) ->
     Commands = [pick_command(Line) || Line <- List, string:find(Line, "cd") == nomatch],
     CountsMap = counts_map(Commands),

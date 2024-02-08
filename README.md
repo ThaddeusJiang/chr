@@ -27,11 +27,10 @@ The commands history report command for the default terminal users.
 brew install erlang
 ```
 
-## Usage
+## Installation
 
-```shell
-git clone https://github.com/ThaddeusJiang/chr.git chr && cd $_
-./chr
+```sh
+mix escript.install hex chr
 ```
 
 ## Report Example

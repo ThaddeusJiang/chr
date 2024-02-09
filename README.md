@@ -1,12 +1,11 @@
-# chr
+# CHR
 
 The commands history report CLI for the Elixir developers.
 
 [![Twitter: ThaddeusJiang](https://img.shields.io/twitter/follow/ThaddeusJiang.svg?style=social)](https://twitter.com/ThaddeusJiang)
 
 > The name "chr" is derived from "commands history report".
-> I like Fig report, but I don't use Fig currently. 😅
-> So, I want to make a same report for myself.
+> Inspired by the Fig report, this tool aims to provide a similar experience for those not using Fig.
 
 ![Fig 2022 Wrapped](https://pbs.twimg.com/media/FkqSV8hXoAEXqON?format=png&name=small)
 

@@ -18,26 +18,36 @@ defmodule Chr do
 
       {:error, _} ->
         []
-
-      _ ->
-        []
     end
   end
 
   @doc """
   pick up command from history record
+
+  ## Examples
+
+      iex> Chr.pick_up_command(": 1707397937:0;cat ~/.zsh_history")
+      "cat"
+
+      iex> Chr.pick_up_command(": 1707397937:0;clear")
+      "clear"
   """
   def pick_up_command(string) do
     string
-    |> String.split(" ")
+    |> String.split(";")
     |> List.delete_at(0)
     |> List.first()
-    |> String.split(";")
-    |> List.last()
+    |> String.split(" ")
+    |> List.first()
   end
 
   @doc """
   pick up directory from history record
+
+  ## Examples
+
+      iex> Chr.pick_up_directory(": 1707397937:0;cd ~/projects/chr")
+      "~/projects/chr"
   """
   def pick_up_directory(string) do
     [head | tail] =
@@ -91,7 +101,7 @@ defmodule Chr do
     history_list
     |> Enum.map(&pick_up_directory/1)
     |> Enum.reject(&is_nil/1)
-    |> Enum.reject(&(String.length(&1) < 2 || String.ends_with?(&1, "..")))
+    |> Enum.reject(&(String.length(&1) < 2 || String.ends_with?(&1, ".")))
     |> Enum.reduce(%{}, fn directory, acc ->
       Map.update(acc, directory, 1, &(&1 + 1))
     end)
@@ -117,12 +127,9 @@ defmodule Chr do
       ~U[2024-02-08 22:12:17Z]
   """
   def pick_up_local_datetime(string) do
-    string
-    |> String.split(":")
-    |> List.delete_at(0)
-    |> List.first()
-    |> String.split(" ")
-    |> List.last()
+    <<_::binary-size(2), timestamp::binary-size(10), _::binary>> = string
+
+    timestamp
     |> String.to_integer()
     |> DateTime.from_unix!()
     |> DateTime.add(Chr.timezone_offset(), :hour)

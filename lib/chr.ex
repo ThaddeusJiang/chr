@@ -1,4 +1,8 @@
 defmodule Chr do
+  @moduledoc """
+  Chr module
+  """
+
   @doc """
   return command history
   """

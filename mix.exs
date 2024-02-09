@@ -11,10 +11,14 @@ defmodule Chr.MixProject do
       description: description(),
       package: package(),
       deps: deps(),
+      escript: escript(),
       name: "chr",
       source_url: "https://github.com/ThaddeusJiang/chr",
       authors: ["ThaddeusJiang"],
-      escript: escript()
+      docs: [
+        main: "readme",
+        extras: ["README.md"]
+      ]
     ]
   end
 

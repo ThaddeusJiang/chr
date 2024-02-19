@@ -32,7 +32,8 @@ defmodule Chr.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:owl, "~> 0.8"},
+      {:owl, git: "https://github.com/fuelen/owl.git"},
+      {:ucwidth, "~> 0.2"},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false}
     ]
   end

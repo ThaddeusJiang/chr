@@ -4,7 +4,7 @@ defmodule Chr.MixProject do
   def project do
     [
       app: :chr,
-      version: "0.2.0",
+      version: "0.2.1",
       elixir: "~> 1.15",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
@@ -12,7 +12,7 @@ defmodule Chr.MixProject do
       package: package(),
       deps: deps(),
       escript: escript(),
-      name: "chr",
+      name: "CHR",
       source_url: "https://github.com/ThaddeusJiang/chr",
       authors: ["ThaddeusJiang"],
       docs: [
@@ -32,7 +32,8 @@ defmodule Chr.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:owl, "~> 0.8"},
+      {:owl, "~> 0.9"},
+      {:ucwidth, "~> 0.2"},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false}
     ]
   end

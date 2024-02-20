@@ -91,9 +91,7 @@ defmodule Chr.Print do
       count_stringify(5, count |> Integer.to_string(), command)
     end)
     |> Enum.join("\n")
-    # FIXME: Owl's bug: right border malposition when title has emoji
-    # |> print_count_number("🏆 Top Commands", :red)
-    |> print_count_number("Top Commands", :red)
+    |> print_count_number("🏆 Top Commands", :red)
   end
 
   @doc """
@@ -106,8 +104,7 @@ defmodule Chr.Print do
       count_stringify(5, count |> Integer.to_string(), directory)
     end)
     |> Enum.join("\n")
-    # |> print_count_number("📂 Top Directories", :red, 5)
-    |> print_count_number("Top Directories", :red)
+    |> print_count_number("📂 Top Directories", :red, 5)
   end
 
   defp busiest_day_stringify({day, count}) do
@@ -121,8 +118,7 @@ defmodule Chr.Print do
     histories
     |> Chr.busiest_day()
     |> busiest_day_stringify()
-    # |> print_count_number("💦 Busiest Day", :green)
-    |> print_count_number("Busiest Day", :green)
+    |> print_count_number("💦 Busiest Day", :green)
   end
 
   @doc """
@@ -135,8 +131,7 @@ defmodule Chr.Print do
       percent_stringify(day, count)
     end)
     |> Enum.join("\n")
-    # |> print_count_bar("📅 Weekly Activity", :yellow)
-    |> print_count_bar("Weekly Activity", :yellow)
+    |> print_count_bar("📅 Weekly Activity", :yellow)
   end
 
   @doc """
@@ -149,8 +144,7 @@ defmodule Chr.Print do
       percent_stringify(hour, count)
     end)
     |> Enum.join("\n")
-    # |> print_count_bar("🕑 Daily Activity", :magenta)
-    |> print_count_bar("Daily Activity", :magenta)
+    |> print_count_bar("🕑 Daily Activity", :magenta)
   end
 
   @doc """

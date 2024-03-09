@@ -3,6 +3,8 @@ defmodule Chr.Cli do
   CLI module
   """
 
+  @ignore_commands ["cd", "pwd", "clear", "exit", "ls", "code"]
+
   @doc """
   main function
   """
@@ -12,7 +14,7 @@ defmodule Chr.Cli do
     Chr.Print.print_logo()
     |> Owl.IO.puts()
 
-    Chr.Print.print_top_commands(histories)
+    Chr.Print.print_top_commands(histories, @ignore_commands)
     |> Owl.IO.puts()
 
     Chr.Print.print_top_directories(histories)

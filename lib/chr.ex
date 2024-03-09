@@ -3,6 +3,8 @@ defmodule Chr do
   Chr module
   """
 
+  @bar_chart_length 20
+
   @doc """
   return command history
   """
@@ -83,9 +85,10 @@ defmodule Chr do
   @doc """
   top commands
   """
-  def top_commands(history_list) do
+  def top_commands(history_list, ignore_commands) do
     history_list
     |> Enum.map(&pick_up_command/1)
+    |> Enum.filter(fn command -> command not in ignore_commands end)
     |> Enum.reduce(%{}, fn command, acc ->
       Map.update(acc, command, 1, &(&1 + 1))
     end)
@@ -186,6 +189,11 @@ defmodule Chr do
 
   @doc """
   Weekly Activity
+
+  ## Examples
+
+      iex> Chr.weekly_activity([": 1709957744:0;cat .zsh_history",": 1710044144:0;cat .zsh_history"])
+      [monday: 0, tuesday: 0, wednesday: 0, thursday: 0, friday: 0, saturday: 20, sunday: 20]
   """
   def weekly_activity(history_list) do
     map =
@@ -200,14 +208,44 @@ defmodule Chr do
     max = if max == 0, do: 1, else: max
 
     [:monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday]
-    |> Enum.with_index()
+    |> Enum.with_index(1)
     |> Enum.map(fn {day, index} ->
-      {day, (Map.get(map, index, 0) / max * 20) |> round()}
+      {day, (Map.get(map, index, 0) / max * @bar_chart_length) |> round()}
     end)
   end
 
   @doc """
   Daily Activity
+
+  ## Examples
+
+      iex> Chr.daily_activity([": 1709957744:0;cat .zsh_history",": 1709968544:0;cat .zsh_history", ": 1710000944:0;cat .zsh_history"])
+      [
+        {"01", 20},
+        {"02", 0},
+        {"03", 0},
+        {"04", 0},
+        {"05", 0},
+        {"06", 0},
+        {"07", 0},
+        {"08", 0},
+        {"09", 0},
+        {"10", 0},
+        {"11", 0},
+        {"12", 0},
+        {"13", 20},
+        {"14", 0},
+        {"15", 0},
+        {"16", 20},
+        {"17", 0},
+        {"18", 0},
+        {"19", 0},
+        {"20", 0},
+        {"21", 0},
+        {"22", 0},
+        {"23", 0},
+        {"24", 0}
+      ]
   """
   def daily_activity(history_list) do
     map =
@@ -225,9 +263,9 @@ defmodule Chr do
     |> Enum.map(fn hour ->
       hour |> Integer.to_string() |> String.pad_leading(2, "0")
     end)
-    |> Enum.with_index()
+    |> Enum.with_index(1)
     |> Enum.map(fn {time, index} ->
-      {time, (Map.get(map, index, 0) / max * 20) |> round()}
+      {time, (Map.get(map, index, 0) / max * @bar_chart_length) |> round()}
     end)
   end
 end

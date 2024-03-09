@@ -84,14 +84,25 @@ defmodule Chr.Print do
   @doc """
   print top commands
   """
-  def print_top_commands(histories) do
-    histories
-    |> Chr.top_commands()
-    |> Enum.map(fn {command, count} ->
-      count_stringify(5, count |> Integer.to_string(), command)
-    end)
-    |> Enum.join("\n")
-    |> print_count_number("🏆 Top Commands", :red)
+  def print_top_commands(histories, ignore_commands) do
+    top_commands =
+      histories
+      |> Chr.top_commands(ignore_commands)
+      |> Enum.map(fn {command, count} ->
+        count_stringify(5, count |> Integer.to_string(), command)
+      end)
+      |> Enum.join("\n")
+
+    ignore_commands = Enum.join(ignore_commands, ", ")
+
+    footer =
+      """
+      \n
+      Ignored commands: #{ignore_commands}
+      """
+      |> String.trim_trailing()
+
+    (top_commands <> footer) |> print_count_number("🏆 Top Commands", :red)
   end
 
   @doc """
